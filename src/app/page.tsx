@@ -1,9 +1,11 @@
+"use client";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -15,7 +17,7 @@ export default function Home() {
               tard
             </Typography>
             <Stack direction="row" spacing={1.5} sx={{ alignItems: "center" }}>
-              <Button color="inherit" sx={{ fontWeight: 600, px: 2 }}>Docs</Button>
+              <Button component={Link} href="/docs" color="inherit" sx={{ fontWeight: 600, px: 2 }}>Docs</Button>
               <Button variant="contained" sx={{ fontWeight: 600 }}>Get Started</Button>
             </Stack>
           </Stack>
@@ -109,7 +111,7 @@ export default function Home() {
                 Send your question as a query parameter. Get back a synthesized
                 answer with per-source summaries and metadata.
               </Typography>
-              <Button variant="contained">Read the Docs</Button>
+              <Button component={Link} href="/docs" variant="contained">Read the Docs</Button>
             </Grid>
             <Grid size={{ xs: 12, md: 7 }}>
               <Box sx={{ bgcolor: "#0d0f12", border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 3, p: 3, fontFamily: "monospace", fontSize: "0.8rem", lineHeight: 2 }}>
@@ -152,7 +154,7 @@ export default function Home() {
           </Typography>
           <Stack direction="row" spacing={2} sx={{ justifyContent: "center" }}>
             <Button variant="contained" size="large">Start Searching</Button>
-            <Button variant="outlined" size="large">Documentation</Button>
+            <Button component={Link} href="/docs" variant="outlined" size="large">Documentation</Button>
           </Stack>
         </Container>
       </Box>
