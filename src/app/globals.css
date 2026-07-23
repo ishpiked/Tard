@@ -1,2 +1,11 @@
 @import "tailwindcss";
 @import "@fontsource-variable/bricolage-grotesque";
+
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
