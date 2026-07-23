@@ -69,21 +69,21 @@ export default function Home() {
           </Typography>
           <Grid container spacing={3}>
             <Grid size={{ xs: 12, md: 4 }}>
-              <Box sx={{ p: 3, border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 3, height: "100%" }}>
+              <Box sx={{ p: 3, border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 3, height: "100%", transition: "all 0.2s ease", "&:hover": { transform: "translateY(-4px)", borderColor: "primary.main" } }}>
                 <Box sx={{ color: "primary.main", fontSize: "0.75rem", fontWeight: 600, mb: 1.5, letterSpacing: 1 }}>STEP 1</Box>
                 <Typography variant="h6" sx={{ mb: 1 }}>Search the web</Typography>
                 <Typography variant="body2">Expands your question and searches across multiple sources. Deduplicates by domain so you get variety, not spam.</Typography>
               </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 4 }}>
-              <Box sx={{ p: 3, border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 3, height: "100%" }}>
+              <Box sx={{ p: 3, border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 3, height: "100%", transition: "all 0.2s ease", "&:hover": { transform: "translateY(-4px)", borderColor: "primary.main" } }}>
                 <Box sx={{ color: "primary.main", fontSize: "0.75rem", fontWeight: 600, mb: 1.5, letterSpacing: 1 }}>STEP 2</Box>
                 <Typography variant="h6" sx={{ mb: 1 }}>Read everything</Typography>
                 <Typography variant="body2">Fetches every result and strips out the noise. No cookie banners, no nav bars, no &quot;subscribe now&quot; paragraphs.</Typography>
               </Box>
             </Grid>
             <Grid size={{ xs: 12, md: 4 }}>
-              <Box sx={{ p: 3, border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 3, height: "100%" }}>
+              <Box sx={{ p: 3, border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 3, height: "100%", transition: "all 0.2s ease", "&:hover": { transform: "translateY(-4px)", borderColor: "primary.main" } }}>
                 <Box sx={{ color: "primary.main", fontSize: "0.75rem", fontWeight: 600, mb: 1.5, letterSpacing: 1 }}>STEP 3</Box>
                 <Typography variant="h6" sx={{ mb: 1 }}>Get one answer</Typography>
                 <Typography variant="body2">Every source is summarized, then combined into a single answer with facts, citations, and any conflicting info noted.</Typography>
