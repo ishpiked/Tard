@@ -12,7 +12,7 @@ export default function Footer() {
             tard
           </Typography>
           <Typography variant="body2">
-            Deep Research API &middot; {new Date().getFullYear()}
+            &copy; {new Date().getFullYear()}
           </Typography>
         </Stack>
       </Container>

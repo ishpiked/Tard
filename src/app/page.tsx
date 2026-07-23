@@ -1,17 +1,14 @@
+import Box from "@mui/material/Box";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import FeaturesSection from "@/components/FeaturesSection";
-import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Header />
       <HeroSection />
-      <FeaturesSection />
-      <CTASection />
       <Footer />
-    </>
+    </Box>
   );
 }
