@@ -18,7 +18,7 @@ export default function Home() {
             </Typography>
             <Stack direction="row" spacing={1.5} sx={{ alignItems: "center" }}>
               <Button component={Link} href="/docs" color="inherit" sx={{ fontWeight: 600, px: 2 }}>Docs</Button>
-              <Button variant="contained" sx={{ fontWeight: 600 }}>Get Started</Button>
+              <Button component={Link} href="/search" variant="contained" sx={{ fontWeight: 600 }}>Get Started</Button>
             </Stack>
           </Stack>
         </Container>
@@ -39,7 +39,7 @@ export default function Home() {
                 and returns one coherent answer with sources. No link spam, no fluff.
               </Typography>
               <Stack direction="row" spacing={2}>
-                <Button variant="contained" size="large">Try It</Button>
+                <Button component={Link} href="/search" variant="contained" size="large">Try It</Button>
                 <Button variant="outlined" size="large">How It Works</Button>
               </Stack>
             </Grid>
@@ -153,7 +153,7 @@ export default function Home() {
             Got a question? See what comes back.
           </Typography>
           <Stack direction="row" spacing={2} sx={{ justifyContent: "center" }}>
-            <Button variant="contained" size="large">Start Searching</Button>
+            <Button component={Link} href="/search" variant="contained" size="large">Start Searching</Button>
             <Button component={Link} href="/docs" variant="outlined" size="large">Documentation</Button>
           </Stack>
         </Container>
