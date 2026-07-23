@@ -10,7 +10,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import OpenInNew from "@mui/icons-material/OpenInNew";
 import SearchIcon from "@mui/icons-material/Search";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://tard.dev";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://tardie.vercel.app";
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
