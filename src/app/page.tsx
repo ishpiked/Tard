@@ -4,81 +4,54 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Grid from "@mui/material/Grid";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Image from "next/image";
-import SearchIcon from "@mui/icons-material/Search";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
-import SummarizeIcon from "@mui/icons-material/Summarize";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-
-const features = [
-  { icon: <SearchIcon />, title: "Web Search", desc: "Searches the web for relevant pages on any topic." },
-  { icon: <AutoStoriesIcon />, title: "Full Content", desc: "Reads entire articles and discussions, not just snippets." },
-  { icon: <SummarizeIcon />, title: "One Answer", desc: "Puts everything together into a single coherent answer." },
-];
 
 export default function Home() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <Box component="header" sx={{ borderBottom: 1, borderColor: "divider", bgcolor: "background.paper" }}>
+      <Box component="header" sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Container maxWidth="lg">
           <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", py: 2 }}>
-            <Typography variant="h5" color="primary" sx={{ fontWeight: 800, letterSpacing: -0.5 }}>
+            <Typography variant="h6" sx={{ fontWeight: 800, letterSpacing: -0.5 }}>
               tard
             </Typography>
-            <Stack direction="row" spacing={2} sx={{ alignItems: "center" }}>
-              <Button color="inherit" sx={{ fontWeight: 600 }}>Docs</Button>
-              <Button variant="contained" disableElevation>Get Started</Button>
+            <Stack direction="row" spacing={1.5} sx={{ alignItems: "center" }}>
+              <Button color="inherit" sx={{ fontWeight: 600, px: 2 }}>Docs</Button>
+              <Button variant="contained" sx={{ fontWeight: 600 }}>Get Started</Button>
             </Stack>
           </Stack>
         </Container>
       </Box>
 
       <Box sx={{ position: "relative", overflow: "hidden" }}>
-        <Box sx={{ position: "absolute", inset: 0, zIndex: 0 }}>
-          <Image
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80"
-            alt=""
-            fill
-            style={{ objectFit: "cover", opacity: 0.06 }}
-            priority
-          />
-        </Box>
-        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1, py: { xs: 8, md: 14 } }}>
-          <Grid container spacing={6} sx={{ alignItems: "center" }}>
+        <Box sx={{ position: "absolute", inset: 0, opacity: 0.4, background: "radial-gradient(ellipse 600px 400px at 70% 40%, rgba(99,102,241,0.15), transparent), radial-gradient(ellipse 400px 300px at 20% 60%, rgba(167,139,250,0.08), transparent)" }} />
+        <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1, py: { xs: 8, md: 12 } }}>
+          <Grid container spacing={8} sx={{ alignItems: "center" }}>
             <Grid size={{ xs: 12, md: 6 }}>
-              <Typography variant="h2" sx={{ fontWeight: 800, mb: 2, lineHeight: 1.1, fontSize: { xs: "2rem", md: "3.5rem" } }}>
-                Ask something.
+              <Typography variant="h2" sx={{ fontSize: { xs: "2rem", md: "3.25rem" }, lineHeight: 1.1, mb: 2, letterSpacing: -1 }}>
+                Ask a question.
                 <br />
-                It finds the answer.
+                Get a real answer.
               </Typography>
-              <Typography sx={{ color: "text.secondary", mb: 4, fontSize: "1.05rem", lineHeight: 1.7, maxWidth: 480 }}>
-                Give it any question. Tard searches the web, reads through
-                articles and discussions, and puts together a proper answer
-                with sources.
+              <Typography sx={{ color: "text.secondary", mb: 5, fontSize: "1rem", lineHeight: 1.7, maxWidth: 460 }}>
+                Tard searches the web, reads through articles and discussions,
+                and returns one coherent answer with sources. No link spam, no fluff.
               </Typography>
               <Stack direction="row" spacing={2}>
-                <Button variant="contained" size="large" disableElevation endIcon={<KeyboardArrowRight />}>Try It</Button>
+                <Button variant="contained" size="large">Try It</Button>
                 <Button variant="outlined" size="large">How It Works</Button>
               </Stack>
             </Grid>
             <Grid size={{ xs: 12, md: 6 }}>
-              <Box sx={{ position: "relative", borderRadius: 3, overflow: "hidden", boxShadow: 8 }}>
-                <Image
-                  src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80"
-                  alt=""
-                  width={800}
-                  height={500}
-                  style={{ width: "100%", height: "auto", display: "block" }}
-                />
-                <Box sx={{ position: "absolute", bottom: 0, left: 0, right: 0, p: 3, background: "linear-gradient(transparent, rgba(0,0,0,0.8))" }}>
-                  <Typography sx={{ color: "white", fontFamily: "monospace", fontSize: "0.8rem", opacity: 0.5, mb: 0.5 }}>
-                    $ curl https://tard.dev/search?q=current+state+of+fusion+energy
-                  </Typography>
-                  <Typography sx={{ color: "white", fontSize: "0.9rem", fontWeight: 600 }}>
-                    &ldquo;Fusion energy research is progressing on multiple fronts&hellip;&rdquo;
-                  </Typography>
+              <Box sx={{ bgcolor: "#0d0f12", border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 3, p: 3, fontFamily: "monospace", fontSize: "0.8rem", lineHeight: 2 }}>
+                <Box sx={{ color: "#64748b", mb: 0.5, fontSize: "0.75rem" }}>$ curl https://tard.dev/search?q=current+state+of+fusion+energy</Box>
+                <Box sx={{ mt: 1.5 }}>
+                  <Box sx={{ color: "#64748b", fontSize: "0.75rem", mb: 0.5 }}># response:</Box>
+                  <Box><Box component="span" sx={{ color: "#94a3b8" }}>{`{`}</Box></Box>
+                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;query&quot;</Box>: <Box component="span" sx={{ color: "#34d399" }}>&quot;current state of fusion energy&quot;</Box>,</Box>
+                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;sources_discovered&quot;</Box>: <Box component="span" sx={{ color: "#fbbf24" }}>3</Box>,</Box>
+                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;sources_scraped&quot;</Box>: <Box component="span" sx={{ color: "#fbbf24" }}>3</Box>,</Box>
+                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;answer&quot;</Box>: <Box component="span" sx={{ color: "#34d399" }}>&quot;Fusion energy research is progressing on multiple fronts...&quot;</Box></Box>
+                  <Box><Box component="span" sx={{ color: "#94a3b8" }}>{`}`}</Box></Box>
                 </Box>
               </Box>
             </Grid>
@@ -86,86 +59,82 @@ export default function Home() {
         </Container>
       </Box>
 
-      <Box sx={{ py: 8, bgcolor: "background.paper" }}>
+      <Box sx={{ py: 10 }}>
         <Container maxWidth="lg">
-          <Typography variant="h5" sx={{ fontWeight: 700, textAlign: "center", mb: 6 }}>
+          <Typography variant="h6" sx={{ color: "primary.main", fontWeight: 600, mb: 1, textAlign: "center" }}>
             How it works
           </Typography>
-          <Grid container spacing={4}>
-            {features.map((f) => (
-              <Grid key={f.title} size={{ xs: 12, sm: 6, md: 4 }}>
-                <Card sx={{ height: "100%", transition: "box-shadow 0.2s", "&:hover": { boxShadow: 4 } }}>
-                  <CardContent sx={{ p: 4, textAlign: "center" }}>
-                    <Box sx={{ color: "secondary.main", mb: 2, fontSize: 32 }}>{f.icon}</Box>
-                    <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>{f.title}</Typography>
-                    <Typography variant="body2">{f.desc}</Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </Box>
-
-      <Box sx={{ py: 8 }}>
-        <Container maxWidth="lg">
-          <Typography variant="h5" sx={{ fontWeight: 700, mb: 5, textAlign: "center" }}>
-            What people use it for
+          <Typography variant="h3" sx={{ textAlign: "center", mb: 8, maxWidth: 500, mx: "auto" }}>
+            Three steps from question to answer.
           </Typography>
-          <Grid container spacing={2}>
-            {[
-              "Compare Notion vs Obsidian features",
-              "Debug a Next.js build error",
-              "Current state of AI video generation",
-              "Transformer architecture explained",
-              "What happened with SVB collapse",
-              "Go vs Rust for backend",
-              "Best budget mechanical keyboards",
-            ].map((q) => (
-              <Grid key={q} size={{ xs: 12, sm: 6, md: 4 }}>
-                <Box sx={{ p: 2.5, border: 1, borderColor: "divider", borderRadius: 2, height: "100%", bgcolor: "background.paper" }}>
-                  <Typography variant="body2" sx={{ fontStyle: "italic", color: "text.secondary" }}>
-                    &ldquo;{q}&rdquo;
-                  </Typography>
-                </Box>
-              </Grid>
-            ))}
+          <Grid container spacing={3}>
+            <Grid size={{ xs: 12, md: 4 }}>
+              <Box sx={{ p: 3, border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 3, height: "100%" }}>
+                <Box sx={{ color: "primary.main", fontSize: "0.75rem", fontWeight: 600, mb: 1.5, letterSpacing: 1 }}>STEP 1</Box>
+                <Typography variant="h6" sx={{ mb: 1 }}>Search the web</Typography>
+                <Typography variant="body2">Expands your question and searches across multiple sources. Deduplicates by domain so you get variety, not spam.</Typography>
+              </Box>
+            </Grid>
+            <Grid size={{ xs: 12, md: 4 }}>
+              <Box sx={{ p: 3, border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 3, height: "100%" }}>
+                <Box sx={{ color: "primary.main", fontSize: "0.75rem", fontWeight: 600, mb: 1.5, letterSpacing: 1 }}>STEP 2</Box>
+                <Typography variant="h6" sx={{ mb: 1 }}>Read everything</Typography>
+                <Typography variant="body2">Fetches every result and strips out the noise. No cookie banners, no nav bars, no &quot;subscribe now&quot; paragraphs.</Typography>
+              </Box>
+            </Grid>
+            <Grid size={{ xs: 12, md: 4 }}>
+              <Box sx={{ p: 3, border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 3, height: "100%" }}>
+                <Box sx={{ color: "primary.main", fontSize: "0.75rem", fontWeight: 600, mb: 1.5, letterSpacing: 1 }}>STEP 3</Box>
+                <Typography variant="h6" sx={{ mb: 1 }}>Get one answer</Typography>
+                <Typography variant="body2">Every source is summarized, then combined into a single answer with facts, citations, and any conflicting info noted.</Typography>
+              </Box>
+            </Grid>
           </Grid>
         </Container>
       </Box>
 
-      <Box sx={{ py: 8, bgcolor: "background.paper" }}>
+      <Box sx={{ borderTop: 1, borderBottom: 1, borderColor: "divider", py: 8 }}>
         <Container maxWidth="lg">
           <Grid container spacing={6} sx={{ alignItems: "center" }}>
             <Grid size={{ xs: 12, md: 5 }}>
-              <Typography variant="h5" sx={{ fontWeight: 700, mb: 1 }}>
+              <Typography variant="h6" sx={{ color: "primary.main", fontWeight: 600, mb: 1 }}>
                 API
               </Typography>
-              <Typography sx={{ color: "text.secondary", mb: 3 }}>
-                One endpoint. Returns the answer with source citations.
+              <Typography variant="h3" sx={{ mb: 2, letterSpacing: -0.5 }}>
+                One endpoint.
+                <br />
+                One response.
               </Typography>
-              <Typography variant="body2" sx={{ fontFamily: "monospace", fontWeight: 600, mb: 0.5 }}>
-                GET /search?q=&lt;query&gt;
+              <Typography sx={{ color: "text.secondary", mb: 4, lineHeight: 1.7 }}>
+                Send your question as a query parameter. Get back a synthesized
+                answer with per-source summaries and metadata.
               </Typography>
-              <Typography variant="body2" sx={{ color: "text.secondary", mb: 4 }}>
-                Include your question as the query parameter. Response includes
-                the answer, per-source summaries, and metadata.
-              </Typography>
-              <Button variant="contained" disableElevation endIcon={<KeyboardArrowRight />}>
-                Read Docs
-              </Button>
+              <Button variant="contained">Read the Docs</Button>
             </Grid>
             <Grid size={{ xs: 12, md: 7 }}>
-              <Box sx={{ bgcolor: "grey.900", color: "grey.100", borderRadius: 2, p: 3, fontFamily: "monospace", fontSize: "0.8rem", lineHeight: 2, overflowX: "auto", boxShadow: 4 }}>
-                <Box sx={{ color: "grey.500" }}>$ curl https://tard.dev/search?q=what+is+fusion+energy</Box>
-                <Box sx={{ mt: 1 }}>
-                  <Box sx={{ color: "grey.500" }}># response:</Box>
-                  <Box>{`{`}</Box>
-                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "info.light" }}>&quot;query&quot;</Box>: <Box component="span" sx={{ color: "success.light" }}>&quot;what is fusion energy&quot;</Box>,</Box>
-                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "info.light" }}>&quot;sources_discovered&quot;</Box>: 3,</Box>
-                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "info.light" }}>&quot;per_source_summaries&quot;</Box>: [&hellip;],</Box>
-                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "info.light" }}>&quot;answer&quot;</Box>: <Box component="span" sx={{ color: "success.light" }}>&quot;Fusion energy research is progressing on multiple fronts&hellip;&quot;</Box></Box>
-                  <Box>{`}`}</Box>
+              <Box sx={{ bgcolor: "#0d0f12", border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 3, p: 3, fontFamily: "monospace", fontSize: "0.8rem", lineHeight: 2 }}>
+                <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
+                  <Box sx={{ width: 10, height: 10, borderRadius: "50%", bgcolor: "#ef4444" }} />
+                  <Box sx={{ width: 10, height: 10, borderRadius: "50%", bgcolor: "#fbbf24" }} />
+                  <Box sx={{ width: 10, height: 10, borderRadius: "50%", bgcolor: "#34d399" }} />
+                </Box>
+                <Box sx={{ color: "#64748b", fontSize: "0.75rem" }}>$ curl https://tard.dev/search\</Box>
+                <Box sx={{ color: "#64748b", fontSize: "0.75rem" }}>&nbsp;&nbsp;-q what+is+the+current+state+of+fusion+energy</Box>
+                <Box sx={{ mt: 2 }}>
+                  <Box><Box component="span" sx={{ color: "#94a3b8" }}>{`{`}</Box></Box>
+                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;query&quot;</Box>: <Box component="span" sx={{ color: "#34d399" }}>&quot;what is the current state of fusion energy&quot;</Box>,</Box>
+                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;sources_discovered&quot;</Box>: <Box component="span" sx={{ color: "#fbbf24" }}>3</Box>,</Box>
+                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;sources_scraped&quot;</Box>: <Box component="span" sx={{ color: "#fbbf24" }}>3</Box>,</Box>
+                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;sources_summarized&quot;</Box>: <Box component="span" sx={{ color: "#fbbf24" }}>3</Box>,</Box>
+                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;per_source_summaries&quot;</Box>: [</Box>
+                  <Box>&nbsp;&nbsp;&nbsp;&nbsp;<Box component="span" sx={{ color: "#94a3b8" }}>{`{`}</Box></Box>
+                  <Box>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;title&quot;</Box>: <Box component="span" sx={{ color: "#34d399" }}>&quot;Fusion Energy Report 2025&quot;</Box>,</Box>
+                  <Box>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;url&quot;</Box>: <Box component="span" sx={{ color: "#34d399" }}>&quot;https://example.com/fusion&quot;</Box>,</Box>
+                  <Box>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;summary&quot;</Box>: <Box component="span" sx={{ color: "#34d399" }}>&quot;TITLE: Fusion Energy Report 2025...&quot;</Box></Box>
+                  <Box>&nbsp;&nbsp;&nbsp;&nbsp;<Box component="span" sx={{ color: "#94a3b8" }}>{`}`}</Box>,</Box>
+                  <Box>&nbsp;&nbsp;],</Box>
+                  <Box>&nbsp;&nbsp;<Box component="span" sx={{ color: "#818cf8" }}>&quot;answer&quot;</Box>: <Box component="span" sx={{ color: "#34d399" }}>&quot;Fusion energy research is progressing on multiple fronts. The ITER project in France aims to demonstrate net energy gain by 2035, while private companies are pursuing compact tokamak and stellarator designs. Recent breakthroughs in high-temperature superconductors have accelerated development timelines.&quot;</Box></Box>
+                  <Box><Box component="span" sx={{ color: "#94a3b8" }}>{`}`}</Box></Box>
                 </Box>
               </Box>
             </Grid>
@@ -173,25 +142,26 @@ export default function Home() {
         </Container>
       </Box>
 
-      <Box sx={{ py: 8, textAlign: "center" }}>
+      <Box sx={{ py: 10, textAlign: "center" }}>
         <Container maxWidth="sm">
-          <Typography variant="h4" sx={{ fontWeight: 700, mb: 2 }}>
+          <Typography variant="h3" sx={{ mb: 2, letterSpacing: -0.5 }}>
             Try it out.
           </Typography>
-          <Typography sx={{ color: "text.secondary", mb: 4 }}>
+          <Typography sx={{ color: "text.secondary", mb: 5 }}>
             Got a question? See what comes back.
           </Typography>
-          <Button variant="contained" size="large" disableElevation endIcon={<KeyboardArrowRight />}>
-            Start Searching
-          </Button>
+          <Stack direction="row" spacing={2} sx={{ justifyContent: "center" }}>
+            <Button variant="contained" size="large">Start Searching</Button>
+            <Button variant="outlined" size="large">Documentation</Button>
+          </Stack>
         </Container>
       </Box>
 
-      <Box component="footer" sx={{ py: 4, borderTop: 1, borderColor: "divider", bgcolor: "background.paper" }}>
+      <Box component="footer" sx={{ py: 5, borderTop: 1, borderColor: "divider" }}>
         <Container maxWidth="lg">
           <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center" }}>
-            <Typography variant="body2" color="primary" sx={{ fontWeight: 600 }}>tard</Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>&copy; {new Date().getFullYear()}</Typography>
+            <Typography sx={{ fontWeight: 800, letterSpacing: -0.5 }}>tard</Typography>
+            <Typography variant="body2">&copy; {new Date().getFullYear()}</Typography>
           </Stack>
         </Container>
       </Box>
