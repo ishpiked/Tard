@@ -160,42 +160,6 @@ export default function SearchPage() {
 
           {results && !loading && (
             <Stack spacing={6}>
-              <Stack direction="row" spacing={2} sx={{ justifyContent: "center", flexWrap: "wrap" }}>
-                {[
-                  { label: "Discovered", value: results.sources_discovered },
-                  { label: "Scraped", value: results.sources_scraped },
-                  { label: "Summarized", value: results.sources_summarized },
-                ].map((stat, i) => (
-                  <Box
-                    key={i}
-                    sx={{
-                      flex: 1,
-                      minWidth: 100,
-                      maxWidth: 160,
-                      textAlign: "center",
-                      p: 2.5,
-                      border: 1,
-                      borderColor: "rgba(255,255,255,0.06)",
-                      borderRadius: 1.5,
-                      bgcolor: "#0a0a0a",
-                    }}
-                  >
-                    <Typography
-                      variant="h3"
-                      sx={{ fontWeight: 700, lineHeight: 1.1, mb: 0.5, color: "#ffffff" }}
-                    >
-                      {stat.value}
-                    </Typography>
-                    <Typography
-                      variant="caption"
-                      sx={{ color: "#666666", textTransform: "uppercase", letterSpacing: 0.5, fontSize: "0.65rem", fontWeight: 500 }}
-                    >
-                      {stat.label}
-                    </Typography>
-                  </Box>
-                ))}
-              </Stack>
-
               <Box
                 sx={{
                   p: 3,
