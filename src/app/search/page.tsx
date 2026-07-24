@@ -156,13 +156,12 @@ export default function SearchPage() {
                   }}
                 />
               ))}
-              <style>{`@keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }`}</style>
             </Stack>
           )}
 
           {results && !loading && (
             <Stack spacing={6}>
-              <Stack direction="row" spacing={2} sx={{ justifyContent: "center" }}>
+              <Stack direction="row" spacing={2} sx={{ justifyContent: "center", flexWrap: "wrap" }}>
                 {[
                   { label: "Discovered", value: results.sources_discovered, icon: <TravelExploreIcon sx={{ fontSize: 18 }} /> },
                   { label: "Scraped", value: results.sources_scraped, icon: <ArticleIcon sx={{ fontSize: 18 }} /> },
@@ -197,20 +196,21 @@ export default function SearchPage() {
                 ))}
               </Stack>
 
-              <Box
-                sx={{
-                  p: 3,
-                  border: 1,
-                  borderColor: "rgba(99,102,241,0.15)",
-                  borderRadius: 2,
-                  bgcolor: "rgba(99,102,241,0.03)",
-                  borderLeft: 3,
-                  borderLeftColor: "primary.main",
-                }}
-              >
-                <Typography variant="body1" sx={{ fontWeight: 500, lineHeight: 1.8, color: "text.primary", fontSize: "1rem" }}>
-                  {results.answer}
-                </Typography>
+              <Box sx={{ position: "relative", pl: 3 }}>
+                <Box sx={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, bgcolor: "primary.main", borderRadius: 1 }} />
+                <Box
+                  sx={{
+                    p: 3,
+                    border: 1,
+                    borderColor: "rgba(99,102,241,0.15)",
+                    borderRadius: 2,
+                    bgcolor: "rgba(99,102,241,0.03)",
+                  }}
+                >
+                  <Typography variant="body1" sx={{ fontWeight: 500, lineHeight: 1.8, color: "text.primary", fontSize: "1rem" }}>
+                    {results.answer}
+                  </Typography>
+                </Box>
               </Box>
 
               {results.per_source_summaries && results.per_source_summaries.length > 0 && (
