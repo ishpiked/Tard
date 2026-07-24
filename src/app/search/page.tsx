@@ -10,7 +10,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import OpenInNew from "@mui/icons-material/OpenInNew";
 import SearchIcon from "@mui/icons-material/Search";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://tardie.vercel.app";
+// Empty by default: production and local deployments use this project's API.
+// NEXT_PUBLIC_API_URL is only useful when deliberately hosting the API elsewhere.
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "").replace(/\/$/, "");
 
 export default function SearchPage() {
   const [query, setQuery] = useState("");
@@ -24,7 +26,7 @@ export default function SearchPage() {
     setError("");
     setResults(null);
     try {
-      const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(query)}`);
+      const res = await fetch(`${API_BASE}/api/search?q=${encodeURIComponent(query)}`);
       if (!res.ok) {
         if (res.status === 429) throw new Error("Rate limited. Wait a moment and try again.");
         throw new Error(`API error (${res.status})`);

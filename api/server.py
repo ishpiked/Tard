@@ -1,0 +1,182 @@
+from fastapi import Depends, FastAPI, Header, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
+from starlette.responses import JSONResponse
+from groq import Groq
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import os
+
+from handlers.config import MAX_WORKERS, ARTICLE_TEXT_LIMIT
+from handlers.search import search_web_deep
+from handlers.scraper import scrape_article_deep
+from handlers.reddit import format_reddit_post_text, resolve_share_link
+from handlers.utils import extract_post_id, extract_subreddit, extract_share_link
+
+app = FastAPI(title="Tard Search API", version="1.0.0")
+app.add_middleware(
+    CORSMiddleware,
+    # Do not combine credentialed CORS requests with a wildcard origin.
+    allow_origins=[origin.strip() for origin in os.getenv("ALLOWED_ORIGINS", "*").split(",") if origin.strip()],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+def require_api_token(
+    authorization: str | None = Header(default=None),
+    x_api_key: str | None = Header(default=None),
+):
+    """Protect the public API when SEARCH_API_TOKEN is configured.
+
+    Leaving SEARCH_API_TOKEN unset is intentional for the bundled same-origin
+    web UI. Set it when exposing this endpoint to other clients.
+    """
+    expected = os.getenv("SEARCH_API_TOKEN")
+    if not expected:
+        return
+    bearer = authorization.removeprefix("Bearer ").strip() if authorization else ""
+    if x_api_key != expected and bearer != expected:
+        raise HTTPException(status_code=401, detail="Invalid or missing API token")
+
+GROQ_MODELS = [
+    "llama-3.3-70b-versatile",
+    "openai/gpt-oss-120b",
+    "openai/gpt-oss-20b",
+    "llama-3.1-8b-instant",
+    "qwen/qwen3.6-27b",
+]
+CEREBRAS_MODELS = ["gemma-4-31b", "gpt-oss-120b", "zai-glm-4.7"]
+OPENROUTER_MODELS = ["poolside/laguna-xs-2.1:free", "poolside/laguna-s-2.1:free"]
+
+def _call_llm(messages, max_tokens=1024):
+    key = os.getenv("GROQ_API_KEY")
+    if key:
+        client = Groq(api_key=key)
+        for model in GROQ_MODELS:
+            try:
+                r = client.chat.completions.create(
+                    model=model, messages=messages, temperature=0.1, max_tokens=max_tokens,
+                )
+                return r.choices[0].message.content
+            except Exception:
+                pass
+
+    cb_key = os.getenv("CEREBRAS_API_KEY")
+    if cb_key:
+        try:
+            from cerebras.cloud.sdk import Cerebras as CerebrasClient
+            client = CerebrasClient(api_key=cb_key)
+            for model in CEREBRAS_MODELS:
+                try:
+                    r = client.chat.completions.create(
+                        model=model, messages=messages, temperature=0.1, max_tokens=max_tokens,
+                    )
+                    return r.choices[0].message.content
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
+    or_key = os.getenv("OPENROUTER_API_KEY")
+    if or_key:
+        try:
+            from openai import OpenAI
+            client = OpenAI(api_key=or_key, base_url="https://openrouter.ai/api/v1")
+            for model in OPENROUTER_MODELS:
+                try:
+                    r = client.chat.completions.create(
+                        model=model, messages=messages, temperature=0.1, max_tokens=max_tokens,
+                    )
+                    return r.choices[0].message.content
+                except Exception:
+                    pass
+        except Exception:
+            pass
+
+    return None
+
+@app.get("/")
+def root():
+    return {"status": "online"}
+
+def fetch_content(url: str) -> str:
+    share_url = extract_share_link(url)
+    if share_url:
+        resolved = resolve_share_link(share_url)
+        if resolved:
+            url = resolved
+    post_id = extract_post_id(url)
+    if post_id:
+        sub = extract_subreddit(url)
+        reddit_text = format_reddit_post_text(post_id, sub)
+        if reddit_text:
+            return reddit_text
+        return ""
+    return scrape_article_deep(url)
+
+@app.get("/search")
+@app.get("/api/search", include_in_schema=False)
+def search(
+    q: str = Query(min_length=2, max_length=500, description="Question to research"),
+    _: None = Depends(require_api_token),
+):
+    try:
+        results = search_web_deep(q)
+        if not results:
+            return {
+                "query": q, "answer": "No relevant results found for your query.",
+                "sources_discovered": 0, "sources_scraped": 0,
+                "sources_summarized": 0, "per_source_summaries": []
+            }
+
+        scraped = {}
+        with ThreadPoolExecutor(max_workers=MAX_WORKERS) as ex:
+            futures = {ex.submit(fetch_content, r["url"]): r for r in results}
+            for f in as_completed(futures):
+                r = futures[f]
+                try:
+                    body = f.result()
+                    if body and len(body) >= 200:
+                        scraped[r["url"]] = body
+                except Exception:
+                    pass
+
+        if not scraped:
+            return {
+                "query": q, "answer": "Insufficient content was extracted to answer your query.",
+                "sources_discovered": len(results), "sources_scraped": 0,
+                "sources_summarized": 0, "per_source_summaries": []
+            }
+
+        context = "\n\n".join(
+            f"TITLE: {r['title']}\nURL: {r['url']}\nSNIPPET: {r.get('snippet', '')}\nCONTENT: {scraped.get(r['url'], '')[:ARTICLE_TEXT_LIMIT]}"
+            for r in results if r['url'] in scraped
+        )
+
+        answer = _call_llm(
+            [{"role": "user", "content": (
+                f"Question: {q}\n\n"
+                f"Below are the raw web sources:\n\n{context}\n\n"
+                "Synthesize these into a concise, thorough answer. "
+                "Include specific facts, data, and cite sources by title. "
+                "Note any uncertainty or conflicting information."
+            )}],
+            max_tokens=1024,
+        )
+
+        if not answer:
+            return JSONResponse({"error": "all models failed"}, status_code=500)
+
+        return JSONResponse({
+            "query": q,
+            "sources_discovered": len(results),
+            "sources_scraped": len(scraped),
+            "sources_summarized": len(scraped),
+            "per_source_summaries": [
+                {"title": r["title"], "url": r["url"], "summary": scraped.get(r["url"], "")[:500]}
+                for r in results if r["url"] in scraped
+            ],
+            "answer": answer,
+        })
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)
