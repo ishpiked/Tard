@@ -9,9 +9,6 @@ import Link from "next/link";
 import CircularProgress from "@mui/material/CircularProgress";
 import OpenInNew from "@mui/icons-material/OpenInNew";
 import SearchIcon from "@mui/icons-material/Search";
-import ArticleIcon from "@mui/icons-material/Article";
-import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-import TravelExploreIcon from "@mui/icons-material/TravelExplore";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://tardie.vercel.app";
 
@@ -56,7 +53,7 @@ export default function SearchPage() {
           position: "sticky",
           top: 0,
           zIndex: 10,
-          bgcolor: "rgba(6,8,10,0.8)",
+          bgcolor: "rgba(0,0,0,0.8)",
         }}
       >
         <Container maxWidth="lg">
@@ -82,15 +79,17 @@ export default function SearchPage() {
         sx={{
           borderBottom: 1,
           borderColor: "divider",
-          py: { xs: 4, md: 6 },
-          background: "radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.07) 0%, transparent 60%)",
+          py: { xs: 5, md: 7 },
         }}
       >
         <Container maxWidth="md">
-          <Typography variant="h4" sx={{ fontWeight: 700, mb: 1, textAlign: "center", letterSpacing: -0.5 }}>
+          <Typography
+            variant="h3"
+            sx={{ fontWeight: 700, mb: 1, textAlign: "center", letterSpacing: -0.5, fontSize: { xs: "1.75rem", md: "2.25rem" } }}
+          >
             Ask anything.
           </Typography>
-          <Typography variant="body2" sx={{ color: "text.secondary", textAlign: "center", mb: 3 }}>
+          <Typography variant="body2" sx={{ color: "text.secondary", textAlign: "center", mb: 4 }}>
             Get a synthesized answer with sources from across the web.
           </Typography>
           <Box sx={{ display: "flex", gap: 1.5 }}>
@@ -102,10 +101,10 @@ export default function SearchPage() {
               onKeyDown={handleKeyDown}
               sx={{
                 flex: 1,
-                bgcolor: "rgba(255,255,255,0.03)",
+                bgcolor: "#0a0a0a",
                 border: 1,
-                borderColor: "rgba(255,255,255,0.08)",
-                borderRadius: 2,
+                borderColor: "rgba(255,255,255,0.1)",
+                borderRadius: 1.5,
                 px: 2.5,
                 py: 1.8,
                 fontSize: "0.95rem",
@@ -114,20 +113,20 @@ export default function SearchPage() {
                 fontFamily: "inherit",
                 transition: "all 0.2s ease",
                 "&:focus": {
-                  borderColor: "primary.main",
-                  boxShadow: "0 0 0 3px rgba(99,102,241,0.15)",
-                  bgcolor: "rgba(255,255,255,0.05)",
+                  borderColor: "#ffffff",
+                  boxShadow: "0 0 0 2px rgba(255,255,255,0.1)",
+                  bgcolor: "#111111",
                 },
-                "&::placeholder": { color: "#64748b" },
+                "&::placeholder": { color: "#555555" },
               }}
             />
             <Button
               variant="contained"
               onClick={handleSearch}
               disabled={loading || !query.trim()}
-              sx={{ px: 3, minWidth: 100, fontWeight: 600 }}
+              sx={{ px: 4, minWidth: 100, fontWeight: 600 }}
             >
-              {loading ? <CircularProgress size={20} sx={{ color: "white" }} /> : "Search"}
+              {loading ? <CircularProgress size={20} sx={{ color: "#000000" }} /> : "Search"}
             </Button>
           </Box>
         </Container>
@@ -136,8 +135,8 @@ export default function SearchPage() {
       <Box sx={{ flex: 1, py: 6 }}>
         <Container maxWidth="md">
           {error && (
-            <Box sx={{ p: 3, border: 1, borderColor: "error.main", borderRadius: 2, bgcolor: "rgba(239,68,68,0.08)" }}>
-              <Typography sx={{ color: "error.main", fontWeight: 600 }}>{error}</Typography>
+            <Box sx={{ p: 3, border: 1, borderColor: "rgba(255,255,255,0.1)", borderRadius: 1.5, bgcolor: "#0a0a0a" }}>
+              <Typography sx={{ fontWeight: 600 }}>{error}</Typography>
             </Box>
           )}
 
@@ -150,7 +149,7 @@ export default function SearchPage() {
                     height: i === 1 ? 80 : i === 0 ? 20 : 12,
                     width: `${w}%`,
                     borderRadius: 1,
-                    background: "linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.03) 100%)",
+                    background: "linear-gradient(90deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.02) 100%)",
                     backgroundSize: "200% 100%",
                     animation: "shimmer 1.5s infinite",
                   }}
@@ -163,32 +162,33 @@ export default function SearchPage() {
             <Stack spacing={6}>
               <Stack direction="row" spacing={2} sx={{ justifyContent: "center", flexWrap: "wrap" }}>
                 {[
-                  { label: "Discovered", value: results.sources_discovered, icon: <TravelExploreIcon sx={{ fontSize: 18 }} /> },
-                  { label: "Scraped", value: results.sources_scraped, icon: <ArticleIcon sx={{ fontSize: 18 }} /> },
-                  { label: "Summarized", value: results.sources_summarized, icon: <AutoAwesomeIcon sx={{ fontSize: 18 }} /> },
+                  { label: "Discovered", value: results.sources_discovered },
+                  { label: "Scraped", value: results.sources_scraped },
+                  { label: "Summarized", value: results.sources_summarized },
                 ].map((stat, i) => (
                   <Box
                     key={i}
                     sx={{
                       flex: 1,
+                      minWidth: 100,
                       maxWidth: 160,
                       textAlign: "center",
-                      p: 2,
+                      p: 2.5,
                       border: 1,
                       borderColor: "rgba(255,255,255,0.06)",
-                      borderRadius: 2,
-                      bgcolor: "rgba(255,255,255,0.02)",
-                      transition: "all 0.2s ease",
-                      "&:hover": { borderColor: "rgba(99,102,241,0.3)", bgcolor: "rgba(99,102,241,0.04)" },
+                      borderRadius: 1.5,
+                      bgcolor: "#0a0a0a",
                     }}
                   >
-                    <Box sx={{ color: "primary.main", mb: 0.5 }}>{stat.icon}</Box>
-                    <Typography variant="h4" sx={{ fontWeight: 700, color: "primary.main", lineHeight: 1.2 }}>
+                    <Typography
+                      variant="h3"
+                      sx={{ fontWeight: 700, lineHeight: 1.1, mb: 0.5, color: "#ffffff" }}
+                    >
                       {stat.value}
                     </Typography>
                     <Typography
                       variant="caption"
-                      sx={{ color: "text.secondary", textTransform: "uppercase", letterSpacing: 0.5, fontSize: "0.65rem" }}
+                      sx={{ color: "#666666", textTransform: "uppercase", letterSpacing: 0.5, fontSize: "0.65rem", fontWeight: 500 }}
                     >
                       {stat.label}
                     </Typography>
@@ -196,29 +196,26 @@ export default function SearchPage() {
                 ))}
               </Stack>
 
-              <Box sx={{ position: "relative", pl: 3 }}>
-                <Box sx={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 3, bgcolor: "primary.main", borderRadius: 1 }} />
-                <Box
-                  sx={{
-                    p: 3,
-                    border: 1,
-                    borderColor: "rgba(99,102,241,0.15)",
-                    borderRadius: 2,
-                    bgcolor: "rgba(99,102,241,0.03)",
-                  }}
-                >
-                  <Typography variant="body1" sx={{ fontWeight: 500, lineHeight: 1.8, color: "text.primary", fontSize: "1rem" }}>
-                    {results.answer}
-                  </Typography>
-                </Box>
+              <Box
+                sx={{
+                  p: 3,
+                  border: 1,
+                  borderColor: "rgba(255,255,255,0.08)",
+                  borderRadius: 1.5,
+                  bgcolor: "#0a0a0a",
+                }}
+              >
+                <Typography variant="body1" sx={{ fontWeight: 450, lineHeight: 1.8, color: "#f5f5f5", fontSize: "1rem" }}>
+                  {results.answer}
+                </Typography>
               </Box>
 
               {results.per_source_summaries && results.per_source_summaries.length > 0 && (
                 <Box>
-                  <Typography variant="h6" sx={{ fontWeight: 700, mb: 2.5, letterSpacing: -0.3 }}>
-                    Sources ({results.per_source_summaries.length})
+                  <Typography variant="h6" sx={{ fontWeight: 700, mb: 2.5, letterSpacing: -0.3, color: "#ffffff" }}>
+                    Sources
                   </Typography>
-                  <Stack spacing={2}>
+                  <Stack spacing={1.5}>
                     {results.per_source_summaries.map((s: any, i: number) => (
                       <Box
                         key={i}
@@ -226,17 +223,17 @@ export default function SearchPage() {
                           p: 2.5,
                           border: 1,
                           borderColor: "rgba(255,255,255,0.06)",
-                          borderRadius: 2,
-                          transition: "all 0.2s ease",
+                          borderRadius: 1.5,
+                          bgcolor: "#0a0a0a",
+                          transition: "all 0.15s ease",
                           "&:hover": {
                             borderColor: "rgba(255,255,255,0.12)",
-                            bgcolor: "rgba(255,255,255,0.015)",
-                            transform: "translateY(-1px)",
+                            bgcolor: "#0d0d0d",
                           },
                         }}
                       >
                         <Stack direction="row" sx={{ alignItems: "flex-start", justifyContent: "space-between", mb: 1.5 }}>
-                          <Typography variant="body2" sx={{ fontWeight: 600, fontSize: "0.9rem" }}>
+                          <Typography variant="body2" sx={{ fontWeight: 600, fontSize: "0.9rem", color: "#f5f5f5" }}>
                             {s.title || "Untitled"}
                           </Typography>
                           {s.url && (
@@ -246,7 +243,7 @@ export default function SearchPage() {
                               target="_blank"
                               size="small"
                               endIcon={<OpenInNew sx={{ fontSize: 14 }} />}
-                              sx={{ fontSize: "0.75rem", minWidth: 0, py: 0, flexShrink: 0, ml: 2 }}
+                              sx={{ fontSize: "0.75rem", minWidth: 0, py: 0, flexShrink: 0, ml: 2, color: "#888888" }}
                             >
                               Visit
                             </Button>
@@ -258,12 +255,12 @@ export default function SearchPage() {
                               display: "inline-block",
                               px: 1.2,
                               py: 0.3,
-                              borderRadius: 1,
+                              borderRadius: 0.5,
                               bgcolor: "rgba(255,255,255,0.04)",
                               mb: 1.5,
                               fontFamily: "monospace",
                               fontSize: "0.7rem",
-                              color: "text.secondary",
+                              color: "#666666",
                               maxWidth: "100%",
                               overflow: "hidden",
                               textOverflow: "ellipsis",
@@ -276,7 +273,7 @@ export default function SearchPage() {
                         {s.summary && (
                           <Typography
                             variant="body2"
-                            sx={{ color: "text.secondary", whiteSpace: "pre-wrap", fontSize: "0.8rem", lineHeight: 1.7 }}
+                            sx={{ color: "#888888", whiteSpace: "pre-wrap", fontSize: "0.8rem", lineHeight: 1.7 }}
                           >
                             {s.summary}
                           </Typography>
@@ -290,26 +287,24 @@ export default function SearchPage() {
           )}
 
           {!results && !loading && !error && (
-            <Box sx={{ textAlign: "center", py: 10 }}>
+            <Box sx={{ textAlign: "center", py: 12 }}>
               <Box
                 sx={{
-                  width: 64,
-                  height: 64,
+                  width: 48,
+                  height: 48,
                   borderRadius: "50%",
-                  bgcolor: "rgba(99,102,241,0.08)",
+                  border: 1,
+                  borderColor: "rgba(255,255,255,0.08)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   mx: "auto",
-                  mb: 2,
+                  mb: 2.5,
                 }}
               >
-                <SearchIcon sx={{ fontSize: 28, color: "primary.main" }} />
+                <SearchIcon sx={{ fontSize: 20, color: "#555555" }} />
               </Box>
-              <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5, color: "text.primary" }}>
-                Ready when you are
-              </Typography>
-              <Typography sx={{ color: "text.secondary", fontSize: "0.9rem" }}>
+              <Typography sx={{ color: "#888888", fontSize: "0.9rem" }}>
                 Type a question above and hit search.
               </Typography>
             </Box>
@@ -320,8 +315,8 @@ export default function SearchPage() {
       <Box component="footer" sx={{ py: 5, borderTop: 1, borderColor: "divider" }}>
         <Container maxWidth="lg">
           <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center" }}>
-            <Typography sx={{ fontWeight: 800, letterSpacing: -0.5 }}>tard</Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary" }}>
+            <Typography sx={{ fontWeight: 800, letterSpacing: -0.5, color: "#ffffff" }}>tard</Typography>
+            <Typography variant="body2" sx={{ color: "#555555" }}>
               &copy; {new Date().getFullYear()}
             </Typography>
           </Stack>

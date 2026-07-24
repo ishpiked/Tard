@@ -84,7 +84,7 @@ function Table({ data }: { data: { param: string; type: string | null; required:
         <Box component="thead">
           <Box component="tr" sx={{ borderBottom: 1, borderColor: "rgba(255,255,255,0.06)" }}>
             {["Parameter", "Type", "Required", "Description"].map((h) => (
-              <Box key={h} component="th" sx={{ textAlign: "left", py: 1.5, px: 1.5, color: "text.secondary", fontWeight: 600, fontSize: "0.8rem", letterSpacing: 0.5 }}>
+              <Box key={h} component="th" sx={{ textAlign: "left", py: 1.5, px: 1.5, color: "#888888", fontWeight: 600, fontSize: "0.8rem", letterSpacing: 0.5 }}>
                 {h}
               </Box>
             ))}
@@ -93,10 +93,10 @@ function Table({ data }: { data: { param: string; type: string | null; required:
         <Box component="tbody">
           {data.map((row) => (
             <Box key={row.param} component="tr" sx={{ borderBottom: 1, borderColor: "rgba(255,255,255,0.04)" }}>
-              <Box component="td" sx={{ py: 1.5, px: 1.5, fontFamily: "monospace", fontSize: "0.8rem", color: "primary.main" }}>{row.param}</Box>
-              <Box component="td" sx={{ py: 1.5, px: 1.5, color: "text.secondary", fontSize: "0.8rem" }}>{row.type || "-"}</Box>
-              <Box component="td" sx={{ py: 1.5, px: 1.5, color: "text.secondary", fontSize: "0.8rem" }}>{row.required || "-"}</Box>
-              <Box component="td" sx={{ py: 1.5, px: 1.5, color: "text.secondary", fontSize: "0.8rem" }}>{row.description}</Box>
+              <Box component="td" sx={{ py: 1.5, px: 1.5, fontFamily: "monospace", fontSize: "0.8rem", color: "#ffffff" }}>{row.param}</Box>
+              <Box component="td" sx={{ py: 1.5, px: 1.5, color: "#888888", fontSize: "0.8rem" }}>{row.type || "-"}</Box>
+              <Box component="td" sx={{ py: 1.5, px: 1.5, color: "#888888", fontSize: "0.8rem" }}>{row.required || "-"}</Box>
+              <Box component="td" sx={{ py: 1.5, px: 1.5, color: "#888888", fontSize: "0.8rem" }}>{row.description}</Box>
             </Box>
           ))}
         </Box>
@@ -108,11 +108,11 @@ function Table({ data }: { data: { param: string; type: string | null; required:
 export default function Docs() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <Box component="header" sx={{ borderBottom: 1, borderColor: "divider" }}>
+      <Box component="header" sx={{ borderBottom: 1, borderColor: "divider", backdropFilter: "blur(12px)", position: "sticky", top: 0, zIndex: 10, bgcolor: "rgba(0,0,0,0.8)" }}>
         <Container maxWidth="lg">
           <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", py: 2 }}>
             <Stack direction="row" spacing={3} sx={{ alignItems: "center" }}>
-              <Typography component={Link} href="/" sx={{ fontWeight: 800, letterSpacing: -0.5, textDecoration: "none", color: "inherit" }}>
+              <Typography component={Link} href="/" sx={{ fontWeight: 800, letterSpacing: -0.5, textDecoration: "none", color: "inherit", fontSize: "1.25rem" }}>
                 tard
               </Typography>
               <Typography variant="body2" sx={{ color: "text.secondary" }}>/ docs</Typography>
@@ -126,7 +126,7 @@ export default function Docs() {
 
       <Container maxWidth="lg" sx={{ py: 6 }}>
         <Stack direction="row" spacing={6}>
-          <Box component="nav" sx={{ width: 220, flexShrink: 0, display: { xs: "none", md: "block" }, position: "sticky", top: 24, alignSelf: "flex-start" }}>
+          <Box component="nav" sx={{ width: 220, flexShrink: 0, display: { xs: "none", md: "block" }, position: "sticky", top: 88, alignSelf: "flex-start" }}>
             <Stack spacing={1}>
               {sections.map((s) => (
                 <Link
@@ -138,8 +138,8 @@ export default function Docs() {
                     variant="body2"
                     sx={{
                       py: 0.5,
-                      color: "text.secondary",
-                      "&:hover": { color: "primary.main" },
+                      color: "#888888",
+                      "&:hover": { color: "#ffffff" },
                       transition: "color 0.15s",
                     }}
                   >
@@ -154,7 +154,7 @@ export default function Docs() {
             <Typography variant="h3" sx={{ fontWeight: 800, mb: 1, letterSpacing: -0.5 }}>
               Documentation
             </Typography>
-            <Typography sx={{ color: "text.secondary", mb: 6 }}>
+            <Typography sx={{ color: "#888888", mb: 6 }}>
               Everything you need to use the Tard Search API.
             </Typography>
 
@@ -165,19 +165,19 @@ export default function Docs() {
                 </Typography>
 
                 {s.content && (
-                  <Typography sx={{ color: "text.secondary", lineHeight: 1.7, mb: 2 }}>
+                  <Typography sx={{ color: "#888888", lineHeight: 1.7, mb: 2 }}>
                     {s.content}
                   </Typography>
                 )}
 
                 {s.code && (
-                  <Box sx={{ bgcolor: "#0d0f12", border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 2, p: 2.5, fontFamily: "monospace", fontSize: "0.85rem", overflowX: "auto" }}>
+                  <Box sx={{ bgcolor: "#0a0a0a", border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 1.5, p: 2.5, fontFamily: "monospace", fontSize: "0.85rem", overflowX: "auto" }}>
                     {s.code}
                   </Box>
                 )}
 
                 {s.codeBlock && (
-                  <Box sx={{ bgcolor: "#0d0f12", border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 2, p: 2.5, fontFamily: "monospace", fontSize: "0.8rem", lineHeight: 1.8, overflowX: "auto", whiteSpace: "pre" }}>
+                  <Box sx={{ bgcolor: "#0a0a0a", border: 1, borderColor: "rgba(255,255,255,0.06)", borderRadius: 1.5, p: 2.5, fontFamily: "monospace", fontSize: "0.8rem", lineHeight: 1.8, overflowX: "auto", whiteSpace: "pre" }}>
                     {s.codeBlock}
                   </Box>
                 )}
@@ -193,7 +193,7 @@ export default function Docs() {
         <Container maxWidth="lg">
           <Stack direction="row" sx={{ justifyContent: "space-between", alignItems: "center" }}>
             <Typography sx={{ fontWeight: 800, letterSpacing: -0.5 }}>tard</Typography>
-            <Typography variant="body2">&copy; {new Date().getFullYear()}</Typography>
+            <Typography variant="body2" sx={{ color: "#555555" }}>&copy; {new Date().getFullYear()}</Typography>
           </Stack>
         </Container>
       </Box>
